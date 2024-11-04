@@ -7,34 +7,21 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.chatbtu.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
+    private val binding by lazy {ActivityMainBinding.inflate(layoutInflater)}
 
-    lateinit var bottomNavigationView : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        bottomNavigationView = findViewById(R.id.bottom_nav_menu)
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-                    as NavHostFragment
-
-        val controller = navHostFragment.navController
-
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment,
-                R.id.messageFragment,
-                R.id.profileFragment
-            )
-        )
-        setupActionBarWithNavController(controller, appBarConfiguration)
-        bottomNavigationView.setupWithNavController(controller)
-
+        binding.apply{
+            val navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+            bottomNavMenu.setupWithNavController(navController)
+        }
     }
 }
